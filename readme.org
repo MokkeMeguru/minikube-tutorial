@@ -1,0 +1,41 @@
+* first: installation in Manjaro Linux
+
+  You should install these packages
+  - minikube [pacman]
+  - docker-machine [pacman]
+  - docker-machine-driver-kvm2 [yaourt]
+  - kubectl [pacman]
+  - qemu [pacman]
+  - ebtables [pacman]
+  You can install these Optional packages
+  - emacs [pacman] and kubernetes [melpa's package]
+  - google-chrome [yaourt]
+
+* initialization of kubernetes using minikube
+  run these commands
+  #+BEGIN_SRC shell
+  sudo usermod -a -G libvirt $USER
+  newgrp lbvirt
+  sudo systemctl start libvirtd
+  sudo systemctl enable libvirtd
+  sudo systemctl start virtlogd
+  sudo systemctl enable virtlogd
+  exit
+  minikube start --vm-driver kvm2
+  #+END_SRC
+
+* runnning first app on the official page
+  see. https://github.com/kubernetes/minikube
+  
+  run this command in your another terminal.
+  #+BEGIN_SRC shell
+  minikube dashboard
+  #+END_SRC
+
+  run these commands in your terminal.
+  #+BEGIN_SRC shell
+  kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
+  kubectl expose deployment hello-minikube --type=NodePort
+  minikube start -p cluster2 --vm-driver kvm2
+  minikube stop
+  #+END_SRC
